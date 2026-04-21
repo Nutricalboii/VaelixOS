@@ -1,0 +1,1 @@
+/build\n*.iso\n*.squashfs\n.DS_Store\nnode_modules\n.env\n*.log

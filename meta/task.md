@@ -1,0 +1,27 @@
+- [ ] **Phase 0: GitHub & Environment**
+    - [ ] Create `~/InfinityOS` workspace
+    - [ ] Initialize local Git repository
+    - [ ] Create folder structure (branding, scripts, iso, src)
+    - [ ] Set up `.gitignore`
+    - [ ] Push to GitHub (User interaction required for auth)
+- [ ] **Phase 1: Performance Foundation**
+    - [ ] Create `build_base.sh` using `debootstrap`
+    - [ ] Implement kernel tuning scripts (XanMod/Liquirix)
+    - [ ] Configure `systemd` and `zram` optimizations
+- [ ] **Phase 2: Visual Identity (macOS 26 Style)**
+    - [ ] Script to install KDE Plasma (Minimal)
+    - [ ] Download and configure Kvantum + Orchis/WhiteSur themes
+    - [ ] Set up Klassy window decorations
+    - [ ] Configure Inter and JetBrains Mono fonts
+    - [ ] Set up "macOS 26" dock and panel layout
+- [ ] **Phase 3: Infinity Control Center**
+    - [ ] Initialize PyQt6 project
+    - [ ] Implement Performance Mode switcher
+    - [ ] Implement GPU/Hybrid mode switcher
+    - [ ] Build UI (Glassmorphic)
+- [ ] **Phase 4: ISO Mastering & Testing**
+    - [ ] Create `generate_iso.sh` script
+    - [ ] Integrate Calamares installer with branding
+    - [ ] Build first Alpha ISO
+    - [ ] Test in QEMU/KVM
+    - [ ] Burn to 320GB HDD for hardware test
