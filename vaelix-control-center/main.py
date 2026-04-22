@@ -44,10 +44,10 @@ class SidebarButton(QPushButton):
             self.setStyleSheet("""
                 QPushButton {
                     background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                        stop:0 rgba(59, 130, 246, 0.35),
-                        stop:1 rgba(139, 92, 246, 0.15));
+                        stop:0 rgba(124, 58, 237, 0.12),
+                        stop:1 rgba(255, 255, 255, 0.03));
                     border: none;
-                    border-left: 3px solid #3b82f6;
+                    border-left: 2px solid #7c3aed;
                     border-radius: 0;
                     text-align: left;
                     padding-left: 16px;
@@ -170,7 +170,7 @@ class VaelixControlCenter(QMainWindow):
 
     def _apply_global_style(self):
         self.setStyleSheet("""
-            QMainWindow { background: #0a0f1e; }
+            QMainWindow { background: #080b14; }
             QWidget { background: transparent; color: #e2e8f0; font-family: 'Inter'; }
             QScrollArea { border: none; background: transparent; }
             QScrollBar:vertical {
@@ -273,7 +273,7 @@ class VaelixControlCenter(QMainWindow):
 
         # --- MAIN CONTENT ---
         content_area = QWidget()
-        content_area.setStyleSheet("background: #0d1424;")
+        content_area.setStyleSheet("background: #111316;")
         content_layout = QVBoxLayout(content_area)
         content_layout.setContentsMargins(0, 0, 0, 0)
         content_layout.setSpacing(0)
@@ -303,7 +303,7 @@ class VaelixControlCenter(QMainWindow):
 
         # Stacked pages
         self.stack = QStackedWidget()
-        self.stack.setStyleSheet("background: #0d1424;")
+        self.stack.setStyleSheet("background: #111316;")
 
         self.modules = {
             0: self._build_presets_page(),
@@ -358,11 +358,11 @@ class VaelixControlCenter(QMainWindow):
         cards_layout.setSpacing(16)
 
         presets = [
-            ("⚡", "Gaming Beast", "Max CPU, max FPS,\nzero compositor lag", "#ef4444", self._preset_gaming),
-            ("🔋", "Battery Monk", "CPU eco, GPU low,\nfewer effects", "#22c55e", self._preset_battery),
-            ("✨", "Mac Luxe", "Premium blur, dock,\nsmooth animations", "#a855f7", self._preset_mac_luxe),
-            ("🎬", "Creator Mode", "GPU max, RAM optimized,\nno interruptions", "#f59e0b", self._preset_creator),
-            ("🧘", "Focus Mode", "Minimal, distraction free,\ncalm environment", "#06b6d4", self._preset_focus),
+            ("⚡", "Performance X", "Maximum CPU throughput", "#8a9aae", self._preset_gaming),
+            ("🔋", "Eco Silent", "Efficiency. Fan quiet.", "#6b8a72", self._preset_battery),
+            ("✦", "Studio Flow", "Smooth. Creative. Balanced.", "#7c7aed", self._preset_mac_luxe),
+            ("▣", "Atelier", "GPU priority. No interruption.", "#8a7a4a", self._preset_creator),
+            ("□", "Quiet Grid", "Distraction removed.", "#4a7a8a", self._preset_focus),
         ]
 
         for icon, name, desc, color, func in presets:
@@ -408,7 +408,7 @@ class VaelixControlCenter(QMainWindow):
     def _preset_gaming(self):
         self._set_cpu_governor("performance")
         subprocess.run(["kwin_x11", "--replace", "--notifiy-on-start"], capture_output=True)
-        self.active_preset_lbl.setText("Active: ⚡ Gaming Beast")
+        self.active_preset_lbl.setText("Active: ⚡ Performance X")
         self.active_preset_lbl.setStyleSheet("""
             color: #ef4444;
             background: rgba(239, 68, 68, 0.1);
@@ -420,7 +420,7 @@ class VaelixControlCenter(QMainWindow):
 
     def _preset_battery(self):
         self._set_cpu_governor("powersave")
-        self.active_preset_lbl.setText("Active: 🔋 Battery Monk")
+        self.active_preset_lbl.setText("Active: 🔋 Eco Silent")
         self.active_preset_lbl.setStyleSheet("""
             color: #22c55e;
             background: rgba(34, 197, 94, 0.1);
@@ -432,7 +432,7 @@ class VaelixControlCenter(QMainWindow):
 
     def _preset_mac_luxe(self):
         self._set_cpu_governor("schedutil")
-        self.active_preset_lbl.setText("Active: ✨ Mac Luxe")
+        self.active_preset_lbl.setText("Active: ✨ Studio Flow")
         self.active_preset_lbl.setStyleSheet("""
             color: #a855f7;
             background: rgba(168, 85, 247, 0.1);
@@ -444,7 +444,7 @@ class VaelixControlCenter(QMainWindow):
 
     def _preset_creator(self):
         self._set_cpu_governor("performance")
-        self.active_preset_lbl.setText("Active: 🎬 Creator Mode")
+        self.active_preset_lbl.setText("Active: 🎬 Atelier")
         self.active_preset_lbl.setStyleSheet("""
             color: #f59e0b;
             background: rgba(245, 158, 11, 0.1);
@@ -456,7 +456,7 @@ class VaelixControlCenter(QMainWindow):
 
     def _preset_focus(self):
         self._set_cpu_governor("schedutil")
-        self.active_preset_lbl.setText("Active: 🧘 Focus Mode")
+        self.active_preset_lbl.setText("Active: 🧘 Quiet Grid")
         self.active_preset_lbl.setStyleSheet("""
             color: #06b6d4;
             background: rgba(6, 182, 212, 0.1);
