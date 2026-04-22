@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Vaelix Control Center
+GenericName=System Settings
+Comment=The central hub for Vaelix OS configuration
+Exec=python3 /usr/lib/vaelix-control-center/main.py
+Icon=vaelix-control-center
+Terminal=false
+Type=Application
+Categories=System;Settings;KDE;
+StartupNotify=true
+StartupWMClass=VaelixControlCenter
+Keywords=vaelix;settings;performance;appearance;system;
