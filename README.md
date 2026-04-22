@@ -15,7 +15,7 @@ Vaelix OS is a high-performance, aesthetically refined Linux distribution design
 ## ✦ Legacy & Signature
 Vaelix OS is more than just software; it is a statement of identity.
 - **Architect & Founder**: Vaibhav Sharma
-- **GitHub**: [vaibhavpandit](https://github.com/vaibhavpandit)
+- **GitHub**: [Nutricalboii](https://github.com/Nutricalboii)
 - **Codename**: "Pandit" Build
 
 ---

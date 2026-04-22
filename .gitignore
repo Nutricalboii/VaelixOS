@@ -1,1 +1,10 @@
-/build\n*.iso\n*.squashfs\n.DS_Store\nnode_modules\n.env\n*.log
+build/
+*.img
+*.iso
+*.squashfs
+.DS_Store
+node_modules/
+.env
+*.log
+graphify-out/cache/
+.agent/

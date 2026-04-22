@@ -1,0 +1,6 @@
+# Graphify Ignoring
+build/
+.git/
+iso/
+meta/
+graphify-out/
