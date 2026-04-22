@@ -21,7 +21,9 @@ from modules.graphics import GraphicsModule
 from modules.system import SystemModule
 from modules.recovery import RecoveryModule
 from modules.devtools import DevToolsModule
+from modules.atmosphere import AtmosphereModule, load_theme_pref
 from core.logger import VaelixLogger
+from core.theme_engine import THEMES, get_qt_stylesheet
 
 
 class SidebarButton(QPushButton):
@@ -159,29 +161,30 @@ class VaelixControlCenter(QMainWindow):
     def __init__(self):
         super().__init__()
         self.logger = VaelixLogger()
+        self.active_theme_id = load_theme_pref()
         self.setWindowTitle("Vaelix Control Center")
         self.setMinimumSize(1100, 700)
         self.resize(1200, 750)
         self.setWindowFlags(Qt.WindowType.Window)
 
         self._init_ui()
-        self._apply_global_style()
+        self._apply_theme_style(self.active_theme_id)
         self.logger.log("Vaelix Control Center started.")
 
-    def _apply_global_style(self):
-        self.setStyleSheet("""
-            QMainWindow { background: #080b14; }
-            QWidget { background: transparent; color: #e2e8f0; font-family: 'Inter'; }
-            QScrollArea { border: none; background: transparent; }
-            QScrollBar:vertical {
-                background: transparent; width: 6px; margin: 0;
-            }
-            QScrollBar::handle:vertical {
-                background: rgba(255,255,255,0.15);
-                border-radius: 3px;
-            }
-            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0; }
-        """)
+    def _apply_theme_style(self, theme_id: str):
+        """Re-style the entire app when atmosphere changes."""
+        self.active_theme_id = theme_id
+        theme = THEMES[theme_id]
+        base_css = get_qt_stylesheet(theme)
+        full_css = f"""
+            QMainWindow {{ background: {theme.base_void}; }}
+            QWidget {{ background: transparent; color: {theme.text_primary}; font-family: 'Space Grotesk', 'Inter', sans-serif; }}
+            QScrollArea {{ border: none; background: transparent; }}
+            QScrollBar:vertical {{ background: transparent; width: 5px; margin: 0; }}
+            QScrollBar::handle:vertical {{ background: {theme.base_border}; border-radius: 2px; }}
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{ height: 0; }}
+        """ + base_css
+        self.setStyleSheet(full_css)
 
     def _init_ui(self):
         central = QWidget()
@@ -249,13 +252,14 @@ class VaelixControlCenter(QMainWindow):
         # Navigation buttons
         self.nav_buttons = []
         nav_items = [
-            ("🚀", "Presets", 0),
-            ("⚡", "Performance", 1),
-            ("🎨", "Appearance", 2),
-            ("🖥️", "Graphics", 3),
-            ("🖥", "System", 4),
-            ("🛡️", "Recovery", 5),
-            ("🧑‍💻", "Dev Tools", 6),
+            ("◈", "Atmosphere", 0),
+            ("◉", "Profiles", 1),
+            ("⚡", "Performance", 2),
+            ("🎨", "Appearance", 3),
+            ("▣", "Graphics", 4),
+            ("⊞", "System", 5),
+            ("◬", "Recovery", 6),
+            ("⟨/⟩", "Dev Tools", 7),
         ]
         for icon, label, idx in nav_items:
             btn = SidebarButton(icon, label)
@@ -305,16 +309,20 @@ class VaelixControlCenter(QMainWindow):
         self.stack = QStackedWidget()
         self.stack.setStyleSheet("background: #111316;")
 
+        atm_module = AtmosphereModule(self.logger)
+        atm_module.theme_changed.connect(self._apply_theme_style)
+
         self.modules = {
-            0: self._build_presets_page(),
-            1: PerformanceModule(self.logger),
-            2: AppearanceModule(self.logger),
-            3: GraphicsModule(self.logger),
-            4: SystemModule(self.logger),
-            5: RecoveryModule(self.logger),
-            6: DevToolsModule(self.logger),
+            0: atm_module,
+            1: self._build_presets_page(),
+            2: PerformanceModule(self.logger),
+            3: AppearanceModule(self.logger),
+            4: GraphicsModule(self.logger),
+            5: SystemModule(self.logger),
+            6: RecoveryModule(self.logger),
+            7: DevToolsModule(self.logger),
         }
-        for idx in range(7):
+        for idx in range(8):
             self.stack.addWidget(self.modules[idx])
 
         content_layout.addWidget(self.stack)
@@ -326,7 +334,7 @@ class VaelixControlCenter(QMainWindow):
         self._navigate(0)
 
     def _navigate(self, idx: int):
-        titles = ["Presets", "Performance", "Appearance", "Graphics", "System", "Recovery", "Dev Tools"]
+        titles = ["Atmosphere", "Profiles", "Performance", "Appearance", "Graphics", "System", "Recovery", "Dev Tools"]
         self.page_title.setText(titles[idx])
         self.stack.setCurrentIndex(idx)
         for i, btn in enumerate(self.nav_buttons):
