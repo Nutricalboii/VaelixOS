@@ -31,30 +31,29 @@ class SidebarButton(QPushButton):
 
     def __init__(self, icon_char: str, label: str, parent=None):
         super().__init__(parent)
-        self.icon_char = icon_char
         self.label_text = label
         self._is_active = False
-        self.setFixedHeight(52)
+        self.setFixedHeight(48)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setCheckable(True)
-        self.setText(f"  {icon_char}   {label}")
-        self.setFont(QFont("Inter", 10))
+        # Text only — no flashy icons
+        self.setText(f"    {label}")
+        self.setFont(QFont("Space Grotesk", 10))
         self._update_style()
 
     def _update_style(self):
         if self._is_active or self.isChecked():
             self.setStyleSheet("""
                 QPushButton {
-                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                        stop:0 rgba(124, 58, 237, 0.12),
-                        stop:1 rgba(255, 255, 255, 0.03));
+                    background: rgba(139, 92, 246, 0.10);
                     border: none;
-                    border-left: 2px solid #7c3aed;
+                    border-left: 2px solid #8b5cf6;
                     border-radius: 0;
                     text-align: left;
-                    padding-left: 16px;
-                    color: #f1f5f9;
+                    padding-left: 18px;
+                    color: #e8e0ff;
                     font-weight: 600;
+                    letter-spacing: 0.02em;
                 }
             """)
         else:
@@ -62,17 +61,17 @@ class SidebarButton(QPushButton):
                 QPushButton {
                     background: transparent;
                     border: none;
-                    border-left: 3px solid transparent;
+                    border-left: 2px solid transparent;
                     border-radius: 0;
                     text-align: left;
-                    padding-left: 16px;
-                    color: #94a3b8;
+                    padding-left: 18px;
+                    color: #7a7a9a;
                     font-weight: 400;
                 }
                 QPushButton:hover {
-                    background: rgba(255, 255, 255, 0.05);
-                    color: #cbd5e1;
-                    border-left: 3px solid rgba(59, 130, 246, 0.5);
+                    background: rgba(139, 92, 246, 0.06);
+                    color: #c4b8e8;
+                    border-left: 2px solid rgba(139, 92, 246, 0.4);
                 }
             """)
 
@@ -161,7 +160,8 @@ class VaelixControlCenter(QMainWindow):
     def __init__(self):
         super().__init__()
         self.logger = VaelixLogger()
-        self.active_theme_id = load_theme_pref()
+        # Default: Amethyst Noir — purple frosted glass identity
+        self.active_theme_id = load_theme_pref() or "amethyst"
         self.setWindowTitle("Vaelix Control Center")
         self.setMinimumSize(1100, 700)
         self.resize(1200, 750)
@@ -252,14 +252,14 @@ class VaelixControlCenter(QMainWindow):
         # Navigation buttons
         self.nav_buttons = []
         nav_items = [
-            ("◈", "Atmosphere", 0),
-            ("◉", "Profiles", 1),
-            ("⚡", "Performance", 2),
-            ("🎨", "Appearance", 3),
-            ("▣", "Graphics", 4),
-            ("⊞", "System", 5),
-            ("◬", "Recovery", 6),
-            ("⟨/⟩", "Dev Tools", 7),
+            ("—", "Atmosphere", 0),
+            ("—", "Profiles", 1),
+            ("—", "Performance", 2),
+            ("—", "Appearance", 3),
+            ("—", "Graphics", 4),
+            ("—", "System", 5),
+            ("—", "Recovery", 6),
+            ("—", "Dev Tools", 7),
         ]
         for icon, label, idx in nav_items:
             btn = SidebarButton(icon, label)

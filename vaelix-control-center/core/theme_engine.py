@@ -80,27 +80,28 @@ THEMES: dict[str, VaelixTheme] = {
         name="Amethyst Noir",
         tagline="Violet soul in obsidian silence.",
 
-        base_void    = "#06040f",
-        base_primary = "#0d0b18",
-        base_panel   = "#14101f",
-        base_border  = "#2d1f4a",
-        base_veil    = "#3d2860",
+        base_void    = "#07050f",
+        base_primary = "#0e0c1a",
+        base_panel   = "#171426",
+        base_border  = "#311d52",
+        base_veil    = "#3e2868",
 
-        text_primary   = "#e2d9f3",
-        text_secondary = "#a78bd4",
-        text_muted     = "#6b5a8a",
+        # High-contrast text for frosted glass readability
+        text_primary   = "#f0ecff",
+        text_secondary = "#c4b0e8",
+        text_muted     = "#7a6a9a",
 
         accent       = "#8b5cf6",
-        accent_glow  = "rgba(139,92,246,0.12)",
-        accent_hover = "rgba(139,92,246,0.20)",
+        accent_glow  = "rgba(139,92,246,0.09)",   # Reduced — subtle glass tint
+        accent_hover = "rgba(139,92,246,0.16)",
 
-        wallpaper    = "amethyst-depth.jpg",
+        wallpaper    = "velocity-surge.jpg",        # The carbon+violet angular wallpaper
         kde_theme    = "com.github.vinceliuice.WhiteSur-dark",
-        blur_strength = 32,
+        blur_strength = 18,                         # Reduced from 32 — still glass, more readable
 
         terminal_cursor = "#8b5cf6",
-        terminal_bg     = "#06040f",
-        terminal_fg     = "#d6bcfa",
+        terminal_bg     = "#07050f",
+        terminal_fg     = "#ede8ff",                # Bright enough to read easily
     ),
 
     "noir": VaelixTheme(
