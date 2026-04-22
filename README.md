@@ -1,34 +1,32 @@
-# Vaelix OS
+# Vaelix OS 1.0: "Titanium Velocity"
 
-**The Next Generation of Linux Desktop | Premium, Powerful, Personal.**
+**The Next Generation of Linux Desktop | Performance Luxury. Intelligence by Design.**
 
-Vaelix OS is a high-performance, aesthetically refined Linux distribution designed for creators, developers, and gamers. Built on the stability of Ubuntu and the flexibility of KDE Plasma, Vaelix OS aims to bridge the gap between macOS-level polish and Linux-grade freedom.
+Vaelix OS is a high-performance, aesthetically refined Linux distribution. It combines the rock-solid stability of Ubuntu 24.04 with the elite **Titanium Velocity** design language.
 
 ---
 
-## ✦ The Vision
-- **Premium Aesthetics**: A "Neo-Luxe" UI inspired by macOS 2026 concepts with frosted glass (Kvantum), deep blur, and dynamic motion.
-- **Extreme Performance**: Low-latency XanMod kernel, zram optimizations, and custom systemd pruning.
-- **Battery Intelligence**: Tailored power profiles for gaming laptops (Nvidia Optimus support).
-- **Control**: The signature **Vaelix Control Center** for unified system management.
+## ✦ The V1.0 Release
+- **Neo-Luxe UI**: A mature, glassmorphic experience featuring the **Amethyst Noir** atmosphere.
+- **Vaelix Control Center**: Unified management for performance, graphics, and identity.
+- **XanMod Kernel**: Built for ultra-low latency and maximum gaming FPS.
+- **Vaelix Atelier**: A curated gallery of abstract patterns and architectural geometry.
+- **Ultralight Build**: < 1.2 GB ISO and < 1.2 GB Idle RAM.
+
+---
 
 ## ✦ Legacy & Signature
-Vaelix OS is more than just software; it is a statement of identity.
+Vaelix OS is crafted with precision, balancing power with restrained luxury.
 - **Architect & Founder**: Vaibhav Sharma
 - **GitHub**: [Nutricalboii](https://github.com/Nutricalboii)
-- **Codename**: "Pandit" Build
+- **Codename**: "Titanium Velocity" | **Build**: v1.0-RC
 
 ---
 
-## ✦ Project Structure
-- `branding/`: Visual assets, logos, and global themes.
-- `scripts/`: Build automation and system tuning scripts.
-- `src/`: Source code for Vaelix Control Center (PyQt6).
-- `iso/`: Generated ISO builds and mastering configuration.
-- `meta/`: Project roadmap and implementation tracking.
-
-## ✦ Installation (Alpha Target)
-Vaelix OS is currently in **Active Development**. The first Alpha ISO will be available for testing on the 320GB HDD enclosure platform soon.
+## ✦ Getting Started
+1. **Download**: [Vaelix-1.0.iso](file:///home/vaibhavpandit/InfinityX%20PC/VaelixOS/build/Vaelix-1.0.iso)
+2. **Flash**: Use BalenaEtcher or `dd` to create a bootable USB.
+3. **Experience**: Boot into the Live Session and explore the **Vaelix Atelier**.
 
 ---
-*Crafted with precision by Vaibhav Sharma.*
+*Vaelix OS — Crafted by Vaibhav Sharma.*

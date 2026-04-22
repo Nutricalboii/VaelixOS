@@ -43,35 +43,39 @@ class SidebarButton(QPushButton):
 
     def _update_style(self):
         if self._is_active or self.isChecked():
+            # Active: Amethyst glow + solid blade
             self.setStyleSheet("""
                 QPushButton {
-                    background: rgba(139, 92, 246, 0.10);
+                    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, 
+                        stop:0 rgba(139, 92, 246, 0.12), 
+                        stop:1 transparent);
                     border: none;
-                    border-left: 2px solid #8b5cf6;
+                    border-left: 3px solid #8b5cf6;
                     border-radius: 0;
                     text-align: left;
-                    padding-left: 18px;
-                    color: #e8e0ff;
+                    padding-left: 20px;
+                    color: #f0ecff;
                     font-weight: 600;
-                    letter-spacing: 0.02em;
+                    letter-spacing: 0.03em;
                 }
             """)
         else:
+            # Inactive: Subtle titanium
             self.setStyleSheet("""
                 QPushButton {
                     background: transparent;
                     border: none;
-                    border-left: 2px solid transparent;
+                    border-left: 3px solid transparent;
                     border-radius: 0;
                     text-align: left;
-                    padding-left: 18px;
+                    padding-left: 20px;
                     color: #7a7a9a;
                     font-weight: 400;
                 }
                 QPushButton:hover {
-                    background: rgba(139, 92, 246, 0.06);
-                    color: #c4b8e8;
-                    border-left: 2px solid rgba(139, 92, 246, 0.4);
+                    background: rgba(139, 92, 246, 0.04);
+                    color: #c4b0e8;
+                    border-left: 3px solid rgba(139, 92, 246, 0.3);
                 }
             """)
 
@@ -198,10 +202,11 @@ class VaelixControlCenter(QMainWindow):
         sidebar.setFixedWidth(230)
         sidebar.setStyleSheet("""
             QFrame {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 rgba(10, 15, 30, 0.98),
-                    stop:1 rgba(7, 10, 22, 0.99));
-                border-right: 1px solid rgba(255, 255, 255, 0.06);
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #0e0c1a,
+                    stop:0.95 #0b0914,
+                    stop:1 #171426);
+                border-right: 1px solid rgba(139, 92, 246, 0.1);
             }
         """)
         sidebar_layout = QVBoxLayout(sidebar)
