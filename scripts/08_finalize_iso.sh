@@ -6,7 +6,7 @@ set -e
 WORK_DIR="/home/vaibhavpandit/InfinityX PC/VaelixOS"
 ISO_DIR="$WORK_DIR/build/iso"
 ISO_OUT="$WORK_DIR/build/Vaelix-1.0.iso"
-SQUASHFS="$ISO_DIR/live/filesystem.squashfs"
+SQUASHFS="$ISO_DIR/casper/filesystem.squashfs"
 
 log() { echo -e "\e[35m✦\e[0m $*"; }
 ok()  { echo -e "\e[32m✓\e[0m $*"; }
@@ -36,8 +36,8 @@ REQUIRED=(
     "$ISO_DIR/boot/grub/i386-pc/eltorito.img"
     "$ISO_DIR/boot/grub/efi.img"
     "$ISO_DIR/EFI/BOOT/BOOTX64.EFI"
-    "$ISO_DIR/live/filesystem.squashfs"
-    "$ISO_DIR/live/filesystem.manifest"
+    "$ISO_DIR/casper/filesystem.squashfs"
+    "$ISO_DIR/casper/filesystem.manifest"
     "$ISO_DIR/.disk/info"
 )
 for f in "${REQUIRED[@]}"; do
