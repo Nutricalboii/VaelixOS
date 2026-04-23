@@ -89,7 +89,7 @@ class OnboardingWizard(QMainWindow):
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         title.setStyleSheet("color: white;")
         
-        subtitle = QLabel("Titanium Velocity Stable v1.1")
+        subtitle = QLabel("Titanium Velocity v1.1 — Stable Candidate")
         subtitle.setFont(QFont("Inter", 12))
         subtitle.setAlignment(Qt.AlignmentFlag.AlignCenter)
         subtitle.setStyleSheet("color: rgba(255, 255, 255, 150);")
