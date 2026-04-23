@@ -204,7 +204,7 @@ def get_qt_stylesheet(theme: VaelixTheme) -> str:
 
     return f"""
     /* Vaelix Theme Engine — {theme.name} */
-    QMainWindow, QDialog {{
+    QMainWindow, QDialog, QStackedWidget, #centralWidget {{
         background: {theme.base_void};
     }}
     QWidget {{

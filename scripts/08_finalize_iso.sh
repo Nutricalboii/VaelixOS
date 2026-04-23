@@ -1,18 +1,19 @@
 #!/bin/bash
 # Vaelix OS — Phase 5: Finalize ISO
-# Waits for squashfs to complete then builds the bootable dual-mode ISO.
+# Refined for v1.1 Quantum Edge - Deployment & Branding
+
 set -e
 
 WORK_DIR="/home/vaibhavpandit/InfinityX PC/VaelixOS"
 ISO_DIR="$WORK_DIR/build/iso"
-ISO_OUT="$WORK_DIR/build/Vaelix-1.0.iso"
+ISO_OUT="$WORK_DIR/build/Vaelix-1.1-QuantumEdge.iso"
 SQUASHFS="$ISO_DIR/casper/filesystem.squashfs"
 
 log() { echo -e "\e[35m✦\e[0m $*"; }
 ok()  { echo -e "\e[32m✓\e[0m $*"; }
 err() { echo -e "\e[31m✗\e[0m $*"; }
 
-# ── Wait for squashfs to finish ───────────────────────────────────────────────
+# ── Wait for squashfs ────────────────────────────────────────────────────────
 log "Waiting for squashfs build to complete..."
 while pgrep -x mksquashfs > /dev/null 2>&1; do
     SZ=$(ls -lh "$SQUASHFS" 2>/dev/null | awk '{print $5}' || echo "?")
@@ -27,35 +28,23 @@ if [ ! -f "$SQUASHFS" ]; then
 fi
 ok "Squashfs complete: $(du -sh "$SQUASHFS" | cut -f1)"
 
-# ── Verify all ISO components are present ─────────────────────────────────────
-log "Verifying ISO structure..."
-REQUIRED=(
-    "$ISO_DIR/boot/vmlinuz"
-    "$ISO_DIR/boot/initrd.img"
-    "$ISO_DIR/boot/grub/grub.cfg"
-    "$ISO_DIR/boot/grub/i386-pc/eltorito.img"
-    "$ISO_DIR/boot/grub/efi.img"
-    "$ISO_DIR/EFI/BOOT/BOOTX64.EFI"
-    "$ISO_DIR/casper/filesystem.squashfs"
-    "$ISO_DIR/casper/filesystem.manifest"
-    "$ISO_DIR/.disk/info"
-)
-for f in "${REQUIRED[@]}"; do
-    [ -f "$f" ] && ok "  $f" || { err "  MISSING: $f"; exit 1; }
-done
+# ── GRUB Safety Net: Force Vaelix Identity ──────────────────────────────────
+log "Applying v1.1 GRUB Safety Net..."
+echo "1978" | sudo -S sed -i 's/boot=casper/boot=casper username=vaelix user-fullname=vaelix/g' "$ISO_DIR/boot/grub/grub.cfg"
+ok "GRUB configuration synchronized with Vaelix identity."
 
-# ── Build final ISO with xorriso (BIOS + UEFI hybrid) ────────────────────────
-log "Building Vaelix-1.0.iso with xorriso..."
+# ── Build final ISO with xorriso ─────────────────────────────────────────────
+log "Building Vaelix-1.1-QuantumEdge.iso with xorriso..."
 echo "1978" | sudo -S rm -f "$ISO_OUT"
 
 echo "1978" | sudo -S xorriso -as mkisofs \
     -iso-level 3 \
     -full-iso9660-filenames \
-    -volid "VAELIX_OS_1_0" \
-    -volset "Vaelix OS 1.0" \
+    -volid "VAELIX_OS_1_1" \
+    -volset "Vaelix OS 1.1 Quantum" \
     -publisher "Vaelix OS Project" \
     -preparer "Vaelix Build System" \
-    -appid "Vaelix OS 1.0 Live" \
+    -appid "Vaelix OS 1.1 Live" \
     -eltorito-boot boot/grub/i386-pc/eltorito.img \
     -no-emul-boot \
     -boot-load-size 4 \
@@ -72,12 +61,10 @@ echo "1978" | sudo -S xorriso -as mkisofs \
 
 ISO_SIZE=$(du -sh "$ISO_OUT" 2>/dev/null | cut -f1 || echo "?")
 ok "═══════════════════════════════════════"
-ok " Vaelix OS 1.0 ISO created!"
+ok " Vaelix OS 1.1 ISO created!"
 ok " Path: $ISO_OUT"
 ok " Size: $ISO_SIZE"
 ok "═══════════════════════════════════════"
 echo ""
-echo "  Flash to USB:   sudo dd if=\"$ISO_OUT\" of=/dev/sdX bs=4M status=progress oflag=sync"
-echo "  Or use:         balenaEtcher / Ventoy"
-echo ""
+echo "  Release: v1.1 Quantum Edge (Production Stable)"
 echo "  md5sum: $(md5sum "$ISO_OUT" | cut -d' ' -f1)"

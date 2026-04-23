@@ -109,3 +109,29 @@ def scrollable_page(inner_widget: QWidget) -> QScrollArea:
     area.setWidget(inner_widget)
     area.setStyleSheet("background: transparent; border: none;")
     return area
+
+
+class StatCard(CardFrame):
+    """Mini card for displaying a single metric."""
+    def __init__(self, icon: str, title: str, value: str, color: str = "#3b82f6", parent=None):
+        super().__init__(parent)
+        self.setFixedSize(180, 100)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(16, 12, 16, 12)
+        
+        row = QHBoxLayout()
+        icon_lbl = QLabel(icon)
+        icon_lbl.setStyleSheet(f"color: {color}; font-size: 18px;")
+        title_lbl = QLabel(title.upper())
+        title_lbl.setStyleSheet("color: #64748b; font-size: 9px; font-weight: bold; letter-spacing: 1px;")
+        row.addWidget(icon_lbl)
+        row.addWidget(title_lbl)
+        row.addStretch()
+        layout.addLayout(row)
+        
+        self.value_lbl = QLabel(value)
+        self.value_lbl.setStyleSheet("color: #f1f5f9; font-size: 20px; font-weight: bold; margin-top: 4px;")
+        layout.addWidget(self.value_lbl)
+
+    def update_value(self, value: str):
+        self.value_lbl.setText(value)

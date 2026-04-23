@@ -1,45 +1,39 @@
 #!/bin/bash
-# Vaelix OS Theming Script - Phase 3 (Step 2)
-# Created by Antigravity for Vaibhav Sharma
+# Vaelix OS Theming Script - Master UI Directive (v1.1)
+# Exact Hex Palette & Luxe Hybrid Window Chrome
 
 set -e
 
 CHROOT_DIR="$(pwd)/build/mnt"
 
-# Helper to run commands inside chroot (standard)
+# Helper to run commands inside chroot
 run_chroot_raw() {
     echo "1978" | sudo -S chroot "${CHROOT_DIR}" /bin/bash -c "$1"
 }
 
-# Helper to run commands inside chroot with eatmydata
 run_chroot() {
     echo "1978" | sudo -S chroot "${CHROOT_DIR}" /bin/bash -c "eatmydata $1"
 }
 
-echo "✦ Step 2: Applying Visual Identity (WhiteSur & Kvantum)..."
+echo "✦ Phase 1: Applying Master UI Design Tokens..."
 
-# 1. Clone Themes & Icons (Inside Chroot)
-run_chroot_raw "rm -rf /tmp/theme_build && mkdir -p /tmp/theme_build"
-run_chroot "git clone https://github.com/vinceliuice/WhiteSur-kde.git /tmp/theme_build/WhiteSur-kde --depth 1"
-run_chroot "git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git /tmp/theme_build/WhiteSur-icon-theme --depth 1"
-
-# 2. Install WhiteSur KDE Theme
-run_chroot_raw "cd /tmp/theme_build/WhiteSur-kde && ./install.sh -c dark"
-
-# 3. Install WhiteSur Icon Theme
-run_chroot_raw "cd /tmp/theme_build/WhiteSur-icon-theme && ./install.sh -b -p"
-
-# 4. Apply Theming via lookandfeeltool (using offscreen plugin for headless)
-run_chroot_raw "export QT_QPA_PLATFORM=offscreen && lookandfeeltool -a com.github.vinceliuice.WhiteSur-dark"
-
-# 5. Configure Kvantum (For Glass/Blur)
-run_chroot_raw "mkdir -p /etc/skel/.config/Kvantum && echo 'theme=WhiteSurDark' > /etc/skel/.config/Kvantum/kvantum.kvconfig"
-
-# 6. Global Defaults (Enforce Kvantum and Dark Mode)
-# Create kdeglobals for the skeleton user
+# 1. Colors & Identity (Exact Hex Codes)
 run_chroot_raw "mkdir -p /etc/skel/.config
 cat <<EOF > /etc/skel/.config/kdeglobals
+[Colors:Window]
+BackgroundNormal=17,19,22
+ForegroundNormal=245,245,247
+
+[Colors:Button]
+BackgroundNormal=26,30,38
+ForegroundNormal=245,245,247
+
+[Colors:Selection]
+BackgroundNormal=124,58,237
+ForegroundNormal=255,255,255
+
 [General]
+Name=Vaelix-Amethyst
 lookAndFeelPackage=com.github.vinceliuice.WhiteSur-dark
 theme=WhiteSurDark
 
@@ -50,7 +44,42 @@ Theme=WhiteSur-dark
 widgetStyle=kvantum
 EOF"
 
-# 7. Cleanup
-run_chroot_raw "rm -rf /tmp/theme_build"
+# 2. Window Chrome: Luxe Hybrid (The "Ditto" Fix)
+# Silver icons in dark capsules, Right-side placement.
+run_chroot_raw "cat <<EOF > /etc/skel/.config/kwinrc
+[org.kde.kdecoration2]
+ButtonsOnLeft=
+ButtonsOnRight=IAX
+CloseOnDoubleClickHandler=false
+BorderSize=Normal
+BorderSizeAuto=false
+NoBorder=false
 
-echo "✦ Vaelix OS: Visual Identity Applied."
+[Windows]
+BorderlessMaximizedWindows=false
+
+[Plugins]
+blurEnabled=true
+translucencyEnabled=true
+cubeEnabled=true
+EOF"
+
+# 3. GTK Parity: Syncing the UX
+run_chroot_raw "mkdir -p /etc/skel/.config/gtk-3.0 /etc/skel/.config/gtk-4.0
+cat <<EOF > /etc/skel/.config/gtk-3.0/settings.ini
+[Settings]
+gtk-theme-name=WhiteSur-Dark
+gtk-icon-theme-name=WhiteSur-dark
+gtk-font-name=Space Grotesk 11
+gtk-cursor-theme-name=WhiteSur-cursors
+gtk-decoration-layout=menu:minimize,maximize,close
+EOF
+cp /etc/skel/.config/gtk-3.0/settings.ini /etc/skel/.config/gtk-4.0/settings.ini"
+
+# 4. Apply to Vaelix User (Production Sync)
+run_chroot_raw "if [ -d /home/vaelix ]; then
+    cp -r /etc/skel/.config/* /home/vaelix/.config/
+    chown -R 1000:1000 /home/vaelix/.config
+fi"
+
+echo "✦ Vaelix OS: Master UI Tokens Applied."

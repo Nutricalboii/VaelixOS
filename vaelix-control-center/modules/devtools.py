@@ -41,8 +41,10 @@ class DevToolsModule(QScrollArea):
         self.logger = logger
         self.setWidgetResizable(True)
         self.setStyleSheet("background: transparent; border: none;")
+        self.viewport().setStyleSheet("background: transparent; border: none;")
 
         content = QWidget()
+        content.setStyleSheet("background: transparent;")
         self.main_layout = QVBoxLayout(content)
         self.main_layout.setContentsMargins(32, 32, 32, 32)
         self.main_layout.setSpacing(28)
