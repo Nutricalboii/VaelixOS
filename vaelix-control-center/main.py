@@ -18,6 +18,7 @@ from modules.performance import PerformanceModule
 from modules.devtools import DevToolsModule
 from modules.graphics import GraphicsModule
 from modules.system import SystemModule
+from modules.security import SecurityModule
 
 class VaelixControlCenter(QMainWindow):
     def __init__(self):
@@ -69,6 +70,7 @@ class VaelixControlCenter(QMainWindow):
             ("Performance", "⚡", PerformanceModule),
             ("Graphics", "🖼️", GraphicsModule),
             ("System", "🖥️", SystemModule),
+            ("Security", "🔒", SecurityModule),
             ("Dev Tools", "🛠️", DevToolsModule),
         ]
         

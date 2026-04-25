@@ -759,16 +759,16 @@
             Apply desktop-grade hardening inspired by GrapheneOS principles. Hardened kernel, locked-down services, app sandboxing, TPM-backed disk encryption, minimal network attack surface.
           </div>
           <div class="task-list">
-            <div class="task"><div class="task-check"></div>Install linux-hardened kernel or apply kernel lockdown mode: <code>security=apparmor lsm=apparmor,lockdown</code></div>
-            <div class="task"><div class="task-check"></div>Enable TPM2-backed LUKS2 encryption: <code>clevis</code> + <code>tpm2-tools</code> for auto-unlock on trusted hardware</div>
-            <div class="task"><div class="task-check"></div>Write AppArmor profiles for: Firefox, VCC, Dolphin, terminal emulator</div>
-            <div class="task"><div class="task-check"></div>Harden <code>/etc/sysctl.conf</code>: disable IPv6 if unused, restrict ptrace, enable ASLR full, disable kernel pointers in logs</div>
-            <div class="task"><div class="task-check"></div>Set up Firejail defaults for untrusted apps (install <code>firejail</code> + <code>firetools</code>)</div>
-            <div class="task"><div class="task-check"></div>Enforce Flatpak permission model: revoke filesystem=host by default, use <code>flatpak override</code> per app</div>
-            <div class="task"><div class="task-check"></div>Create <code>vx security audit</code> command: checks AppArmor status, LUKS status, open ports, failed login attempts</div>
-            <div class="task"><div class="task-check"></div>Add VCC Security tab: shows active profiles, TPM status, last audit result, one-click re-enforce button</div>
-            <div class="task"><div class="task-check"></div>Disable Bluetooth + WiFi on fresh boot (user enables via VCC toggle — explicit consent model)</div>
-            <div class="task"><div class="task-check"></div>Log all <code>sudo</code> usage to <code>/var/log/vaelix/sudo.log</code> with timestamp + command</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Install linux-hardened kernel or apply kernel lockdown mode: <code>security=apparmor lsm=apparmor,lockdown</code></div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Enable TPM2-backed LUKS2 encryption: <code>clevis</code> + <code>tpm2-tools</code> for auto-unlock on trusted hardware</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Write AppArmor profiles for: Firefox, VCC, Dolphin, terminal emulator</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Harden <code>/etc/sysctl.conf</code>: disable IPv6 if unused, restrict ptrace, enable ASLR full, disable kernel pointers in logs</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Set up Firejail defaults for untrusted apps (install <code>firejail</code> + <code>firetools</code>)</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Enforce Flatpak permission model: revoke filesystem=host by default, use <code>flatpak override</code> per app</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Create <code>vx security audit</code> command: checks AppArmor status, LUKS status, open ports, failed login attempts</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add VCC Security tab: shows active profiles, TPM status, last audit result, one-click re-enforce button</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Disable Bluetooth + WiFi on fresh boot (user enables via VCC toggle — explicit consent model)</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Log all <code>sudo</code> usage to <code>/var/log/vaelix/sudo.log</code> with timestamp + command</div>
           </div>
         </div>
       </div>
@@ -874,8 +874,8 @@
       </div>
       <div class="tl-row">
         <div class="tl-phase-name">Phase 2 · Security</div>
-        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #22d3ee, #67e8f9);"></div></div>
-        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:100%; background: linear-gradient(90deg, #22d3ee, #67e8f9);"></div></div>
+        <div class="tl-status" style="color: var(--cyan); font-weight: bold;">COMPLETED</div>
       </div>
       <div class="tl-row">
         <div class="tl-phase-name">Phase 3 · Rust Core</div>
