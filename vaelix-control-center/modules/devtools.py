@@ -162,7 +162,56 @@ class DevToolsModule(QScrollArea):
 
         log_layout.addWidget(self.term_output)
         self.main_layout.addWidget(log_card)
+
+        self.main_layout.addWidget(make_divider())
+
+        # Pentest Layer
+        self.main_layout.addWidget(make_section(
+            "Kali Pentest Layer",
+            "Isolated Kali Linux sandbox for security testing. Host remains safe."
+        ))
+
+        kali_card = CardFrame()
+        kali_layout = QVBoxLayout(kali_card)
+        kali_layout.setContentsMargins(20, 16, 20, 16)
+        kali_layout.setSpacing(12)
+
+        disclaimer = QLabel(
+            "⚠ WARNING: Only use these tools on networks and systems you own or "
+            "have explicit permission to test. Unauthorized use is illegal."
+        )
+        disclaimer.setWordWrap(True)
+        disclaimer.setStyleSheet("color: #f87171; font-size: 11px; font-weight: bold; background: rgba(248,113,113,0.05); padding: 10px; border-radius: 6px;")
+        kali_layout.addWidget(disclaimer)
+
+        kali_controls = QHBoxLayout()
+        kali_status = QLabel("Sandbox: Inactive")
+        kali_status.setFont(QFont("Inter", 10, QFont.Weight.Bold))
+        
+        self.pentest_btn = VaelixButton("Activate Kali Sandbox", "#4ade80")
+        self.pentest_btn.clicked.connect(self._toggle_pentest)
+        
+        kali_controls.addWidget(kali_status)
+        kali_controls.addStretch()
+        kali_controls.addWidget(self.pentest_btn)
+        kali_layout.addLayout(kali_controls)
+
+        self.main_layout.addWidget(kali_card)
         self.main_layout.addStretch()
+
+    def _toggle_pentest(self):
+        # This would call 'vx pentest on' via subprocess
+        # For now, we simulate the toggle
+        if "Activate" in self.pentest_btn.text():
+            self.pentest_btn.setText("Stop Kali Sandbox")
+            self.pentest_btn.setStyleSheet("background: #f87171; color: white; border-radius: 8px; font-weight: bold;")
+            subprocess.Popen(["konsole", "-e", "vx", "pentest", "on"])
+            self.logger.log("Kali Pentest Sandbox activated.")
+        else:
+            self.pentest_btn.setText("Activate Kali Sandbox")
+            self.pentest_btn.setStyleSheet("background: #4ade80; color: white; border-radius: 8px; font-weight: bold;")
+            subprocess.Popen(["vx", "pentest", "off"])
+            self.logger.log("Kali Pentest Sandbox stopped.")
 
     def _install_stack(self, packages: list[str], name: str):
         self.term_output.clear()

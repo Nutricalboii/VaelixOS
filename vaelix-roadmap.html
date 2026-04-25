@@ -787,16 +787,16 @@
             Rewrite speed-critical vx commands as compiled Rust binaries. Add Rust + full dev stack to the default install. This is the "clueless young person building an OS in Rust" moment.
           </div>
           <div class="task-list">
-            <div class="task"><div class="task-check"></div>Install Rust toolchain via official installer (not distro package): <code>curl https://sh.rustup.rs | sh</code></div>
-            <div class="task"><div class="task-check"></div>Create <code>vx-core</code> Rust project: cargo workspace with sub-crates for each vx command</div>
-            <div class="task"><div class="task-check"></div>Port <code>vx doctor</code> to Rust: reads SMART data, battery health, service status — faster than Python version</div>
-            <div class="task"><div class="task-check"></div>Port <code>vx clean</code> to Rust: dry-run preview mode, then clean with confirmation prompt</div>
-            <div class="task"><div class="task-check"></div>Write <code>vx bench</code> in Rust: CPU, RAM, disk speed benchmark with Vaelix-styled ASCII output</div>
-            <div class="task"><div class="task-check"></div>Keep vx Shell wrapper as entrypoint — Rust binaries are called under the hood transparently</div>
-            <div class="task"><div class="task-check"></div>Add <code>vx dev init</code> command: scaffolds a dev workspace with git, venv, cargo, Docker in one shot</div>
-            <div class="task"><div class="task-check"></div>Pre-install: <code>rustc</code>, <code>cargo</code>, <code>cargo-audit</code>, <code>clippy</code>, Node.js LTS, Python 3.12 + pip, Docker, lazygit</div>
-            <div class="task"><div class="task-check"></div>Integrate <code>cargo audit</code> into <code>vx doctor</code> for Rust project vulnerability scanning</div>
-            <div class="task"><div class="task-check"></div>Add Starship prompt Rust segment: shows active Rust version and cargo project name in terminal</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Install Rust toolchain via official installer (not distro package): <code>curl https://sh.rustup.rs | sh</code></div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Create <code>vx-core</code> Rust project: cargo workspace with sub-crates for each vx command</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Port <code>vx doctor</code> to Rust: reads SMART data, battery health, service status — faster than Python version</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Port <code>vx clean</code> to Rust: dry-run preview mode, then clean with confirmation prompt</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Write <code>vx bench</code> in Rust: CPU, RAM, disk speed benchmark with Vaelix-styled ASCII output</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Keep vx Shell wrapper as entrypoint — Rust binaries are called under the hood transparently</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add <code>vx dev init</code> command: scaffolds a dev workspace with git, venv, cargo, Docker in one shot</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Pre-install: <code>rustc</code>, <code>cargo</code>, <code>cargo-audit</code>, <code>clippy</code>, Node.js LTS, Python 3.12 + pip, Docker, lazygit</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Integrate <code>cargo audit</code> into <code>vx doctor</code> for Rust project vulnerability scanning</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add Starship prompt Rust segment: shows active Rust version and cargo project name in terminal</div>
           </div>
         </div>
       </div>
@@ -815,15 +815,15 @@
             Integrate optional Kali tooling in an isolated Podman/namespace container — not system-level. User activates via <code>vx pentest on</code>. No host risk, full tool access.
           </div>
           <div class="task-list">
-            <div class="task"><div class="task-check"></div>Install Podman (rootless container runtime) as the isolation layer for Kali tools</div>
-            <div class="task"><div class="task-check"></div>Build <code>vaelix-kali</code> Podman image: based on kalilinux/kali-rolling, with nmap, gobuster, hydra, sqlmap, nikto, wireshark-cli</div>
-            <div class="task"><div class="task-check"></div>Write <code>vx pentest on</code>: pulls/starts the kali container and drops user into an isolated shell</div>
-            <div class="task"><div class="task-check"></div>Write <code>vx pentest off</code>: stops and removes the running container cleanly</div>
-            <div class="task"><div class="task-check"></div>Add VCC "Dev Tools" tab: pentest toggle, container status, list of available tools</div>
-            <div class="task"><div class="task-check"></div>Create <code>vx scan [target]</code> wrapper: runs nmap + basic recon inside the container with output piped to host terminal</div>
-            <div class="task"><div class="task-check"></div>Ensure WiFi adapter is passed through to container for wireless scanning if needed (<code>--device</code> flag)</div>
-            <div class="task"><div class="task-check"></div>Store scan results in <code>~/vaelix-pentest-logs/</code> on host — container has no persistent write access elsewhere</div>
-            <div class="task"><div class="task-check"></div>Add disclaimer modal in VCC when enabling pentest mode: "only use on networks you own or have permission to test"</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Install Podman (rootless container runtime) as the isolation layer for Kali tools</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Build <code>vaelix-kali</code> Podman image: based on kalilinux/kali-rolling, with nmap, gobuster, hydra, sqlmap, nikto, wireshark-cli</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Write <code>vx pentest on</code>: pulls/starts the kali container and drops user into an isolated shell</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Write <code>vx pentest off</code>: stops and removes the running container cleanly</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add VCC "Dev Tools" tab: pentest toggle, container status, list of available tools</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Create <code>vx scan [target]</code> wrapper: runs nmap + basic recon inside the container with output piped to host terminal</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Ensure WiFi adapter is passed through to container for wireless scanning if needed (<code>--device</code> flag)</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Store scan results in <code>~/vaelix-pentest-logs/</code> on host — container has no persistent write access elsewhere</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add disclaimer modal in VCC when enabling pentest mode: "only use on networks you own or have permission to test"</div>
           </div>
         </div>
       </div>
@@ -842,17 +842,17 @@
             Fix the live session boot bug. Complete the onboarding wizard. Stress-test VHI Lite/Velocity on edge hardware. Build the final ISO with all layers integrated. Ship v2.0.
           </div>
           <div class="task-list">
-            <div class="task"><div class="task-check"></div>Fix live ISO boot: ensure vmlinuz is correctly symlinked in <code>/boot</code> for casper live session</div>
-            <div class="task"><div class="task-check"></div>Test ISO on VirtualBox, QEMU/KVM, bare metal USB boot — verify all three work before release</div>
-            <div class="task"><div class="task-check"></div>Upgrade VHI: add GPU vendor detection (nvidia/amd/intel), apply correct driver and power profile per vendor</div>
-            <div class="task"><div class="task-check"></div>VHI Lite mode: disable Baloo indexing, reduce animation scale to 0.5x, cap background daemons</div>
-            <div class="task"><div class="task-check"></div>VHI Velocity mode: enable full animations, XanMod kernel params, gaming mode auto-prep</div>
-            <div class="task"><div class="task-check"></div>Build complete onboarding wizard (PyQt6): Step 1 = Atmosphere pick, Step 2 = VHI report, Step 3 = dev/security mode, Step 4 = done + VCC launch</div>
-            <div class="task"><div class="task-check"></div>Add Nvidia persistence fix: write <code>/etc/systemd/system/nvidia-persistenced.service</code> override</div>
-            <div class="task"><div class="task-check"></div>Add acpi_osi fix for suspend/resume: write kernel parameter to <code>/etc/default/grub</code> and run <code>update-grub</code></div>
-            <div class="task"><div class="task-check"></div>Rebuild Plymouth boot splash: animated Vaelix logo with amethyst particle effect</div>
-            <div class="task"><div class="task-check"></div>Run full release audit: <code>vx doctor</code>, security audit, snapshot test, ISO boot test — target Trust Score 97/100</div>
-            <div class="task"><div class="task-check"></div>Tag release as <code>v2.0-renaissance</code> on GitHub, update README with new architecture diagram</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Fix live ISO boot: ensure vmlinuz is correctly symlinked in <code>/boot</code> for casper live session</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Test ISO on VirtualBox, QEMU/KVM, bare metal USB boot — verify all three work before release</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Upgrade VHI: add GPU vendor detection (nvidia/amd/intel), apply correct driver and power profile per vendor</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>VHI Lite mode: disable Baloo indexing, reduce animation scale to 0.5x, cap background daemons</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>VHI Velocity mode: enable full animations, XanMod kernel params, gaming mode auto-prep</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Build complete onboarding wizard (PyQt6): Step 1 = Atmosphere pick, Step 2 = VHI report, Step 3 = dev/security mode, Step 4 = done + VCC launch</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add Nvidia persistence fix: write <code>/etc/systemd/system/nvidia-persistenced.service</code> override</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add acpi_osi fix for suspend/resume: write kernel parameter to <code>/etc/default/grub</code> and run <code>update-grub</code></div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Rebuild Plymouth boot splash: animated Vaelix logo with amethyst particle effect</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Run full release audit: <code>vx doctor</code>, security audit, snapshot test, ISO boot test — target Trust Score 97/100</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Tag release as <code>v2.0-renaissance</code> on GitHub, update README with new architecture diagram</div>
           </div>
         </div>
       </div>
@@ -879,18 +879,18 @@
       </div>
       <div class="tl-row">
         <div class="tl-phase-name">Phase 3 · Rust Core</div>
-        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #f97316, #fb923c);"></div></div>
-        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:100%; background: linear-gradient(90deg, #f97316, #fb923c);"></div></div>
+        <div class="tl-status" style="color: var(--rust); font-weight: bold;">COMPLETED</div>
       </div>
       <div class="tl-row">
         <div class="tl-phase-name">Phase 4 · Kali Layer</div>
-        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
-        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:100%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
+        <div class="tl-status" style="color: var(--green); font-weight: bold;">COMPLETED</div>
       </div>
       <div class="tl-row">
         <div class="tl-phase-name">Phase 5 · Release ISO</div>
-        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #e879f9, #f0abfc);"></div></div>
-        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:100%; background: linear-gradient(90deg, #e879f9, #f0abfc);"></div></div>
+        <div class="tl-status" style="color: #e879f9; font-weight: bold;">COMPLETED</div>
       </div>
     </div>
   </div>

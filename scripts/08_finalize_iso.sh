@@ -48,7 +48,7 @@ set color_highlight=white/dark-gray
 
 menuentry \"  Vaelix OS 1.1  ·  Live Session\" --class vaelix {
     # Relies on the global root discovery at the top of the file
-    linux  /vmlinuz boot=casper username=vaelix user-fullname=vaelix quiet splash ---
+    linux  /vmlinuz boot=casper username=vaelix user-fullname=vaelix acpi_osi=\"Linux\" quiet splash ---
     initrd /initrd.img
 }
 
