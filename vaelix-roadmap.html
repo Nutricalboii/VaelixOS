@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vaelix OS 2.0 — Renaissance Roadmap</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+  :root {
+    --void: #080810;
+    --surface: #0e0e1a;
+    --surface2: #13131f;
+    --surface3: #1a1a2e;
+    --border: rgba(139,92,246,0.15);
+    --border-bright: rgba(139,92,246,0.4);
+    --amethyst: #8b5cf6;
+    --amethyst-glow: rgba(139,92,246,0.25);
+    --cyan: #22d3ee;
+    --cyan-glow: rgba(34,211,238,0.2);
+    --rust: #f97316;
+    --rust-glow: rgba(249,115,22,0.2);
+    --green: #4ade80;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background mesh */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 0%, rgba(139,92,246,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 100%, rgba(34,211,238,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid var(--border-bright);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--amethyst);
+    letter-spacing: 0.1em;
+    margin-bottom: 24px;
+  }
+
+  .header-badge span { width: 6px; height: 6px; background: var(--amethyst); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #fff 0%, var(--amethyst) 60%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-dim);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+
+  .meta-item .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+
+  .dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .dot-amethyst { background: var(--amethyst); box-shadow: 0 0 6px var(--amethyst); }
+  .dot-cyan { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+  .dot-rust { background: var(--rust); box-shadow: 0 0 6px var(--rust); }
+
+  /* CURRENT STATE SUMMARY */
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    padding: 40px 0 0;
+  }
+
+  .state-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .state-card:hover { border-color: var(--border-bright); }
+
+  .state-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .state-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--amethyst);
+  }
+
+  .state-sub {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* SECTION HEADERS */
+  .section {
+    padding: 60px 0 0;
+  }
+
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--amethyst);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .section-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  /* FLAW CARDS */
+  .flaw-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .flaw-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: rgba(248,113,113,0.04);
+    border: 1px solid rgba(248,113,113,0.12);
+    border-radius: 10px;
+    padding: 14px 18px;
+  }
+
+  .flaw-icon {
+    width: 20px;
+    height: 20px;
+    background: rgba(248,113,113,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .flaw-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .flaw-text strong { color: var(--red); font-weight: 500; }
+
+  /* PHASE CARDS */
+  .phases {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 32px 0 0;
+    position: relative;
+  }
+
+  .phases::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 40px;
+    bottom: 40px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--amethyst), var(--cyan), transparent);
+    opacity: 0.3;
+  }
+
+  .phase {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 24px;
+    padding-bottom: 40px;
+  }
+
+  .phase-dot-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4px;
+  }
+
+  .phase-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    background: var(--void);
+  }
+
+  .phase-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .phase:hover .phase-dot::after { opacity: 1; }
+
+  .dot-p1 { border-color: var(--amethyst); }
+  .dot-p1::after { background: var(--amethyst-glow); }
+  .dot-p2 { border-color: var(--cyan); }
+  .dot-p2::after { background: var(--cyan-glow); }
+  .dot-p3 { border-color: var(--rust); }
+  .dot-p3::after { background: var(--rust-glow); }
+  .dot-p4 { border-color: var(--green); }
+  .dot-p4::after { background: rgba(74,222,128,0.2); }
+  .dot-p5 { border-color: #e879f9; }
+  .dot-p5::after { background: rgba(232,121,249,0.2); }
+
+  .phase-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    transition: border-color 0.25s, background 0.25s;
+  }
+
+  .phase-card:hover {
+    border-color: var(--border-bright);
+    background: var(--surface3);
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .phase-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .phase-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    border: 1px solid;
+    letter-spacing: 0.08em;
+  }
+
+  .tag-amethyst { color: var(--amethyst); border-color: rgba(139,92,246,0.3); background: rgba(139,92,246,0.08); }
+  .tag-cyan { color: var(--cyan); border-color: rgba(34,211,238,0.3); background: rgba(34,211,238,0.08); }
+  .tag-rust { color: var(--rust); border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.08); }
+  .tag-green { color: var(--green); border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); }
+  .tag-pink { color: #e879f9; border-color: rgba(232,121,249,0.3); background: rgba(232,121,249,0.08); }
+
+  .phase-goal {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .task-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .task-check {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--text-faint);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .task code {
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.2);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--amethyst);
+  }
+
+  /* ARCHITECTURE BLOCK */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+  .arch-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+
+  .arch-icon {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .arch-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  .arch-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .arch-stack {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pill {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(139,92,246,0.08);
+    border: 1px solid rgba(139,92,246,0.2);
+    color: var(--amethyst);
+  }
+
+  .pill-cyan {
+    background: rgba(34,211,238,0.08);
+    border-color: rgba(34,211,238,0.2);
+    color: var(--cyan);
+  }
+
+  .pill-rust {
+    background: rgba(249,115,22,0.08);
+    border-color: rgba(249,115,22,0.2);
+    color: var(--rust);
+  }
+
+  .pill-green {
+    background: rgba(74,222,128,0.08);
+    border-color: rgba(74,222,128,0.2);
+    color: var(--green);
+  }
+
+  /* TIMELINE TRACKER */
+  .timeline-bar {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-top: 8px;
+  }
+
+  .tl-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tl-row:last-child { border-bottom: none; }
+
+  .tl-phase-name {
+    font-size: 12px;
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .tl-bar-track {
+    background: rgba(255,255,255,0.04);
+    border-radius: 100px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .tl-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+  }
+
+  .tl-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 0 40px;
+    border-top: 1px solid var(--border);
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 16px;
+  }
+
+  .footer-brand {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--amethyst), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .footer-sub {
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+
+  .footer-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-faint);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .footer-link:hover { color: var(--amethyst); border-color: var(--border-bright); }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 48px 0 0;
+  }
+
+  @media (max-width: 600px) {
+    .tl-row { grid-template-columns: 1fr; gap: 6px; }
+    .tl-status { text-align: left; }
+    .header-meta { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-badge">
+      <span></span>
+      VAELIX OS · RENAISSANCE PLAN · 2026
+    </div>
+    <h1>Vaelix OS 2.0<br>Renaissance</h1>
+    <p class="subtitle">
+      NixOS elegance. GrapheneOS security. Kali power. Your identity.<br>
+      Full engineering roadmap — paste this into your AI IDE and execute phase by phase.
+    </p>
+    <div class="header-meta">
+      <div class="meta-item"><div class="dot dot-green"></div>Base: v1.1 Titanium Velocity</div>
+      <div class="meta-item"><div class="dot dot-amethyst"></div>Architect: Vaibhav Sharma</div>
+      <div class="meta-item"><div class="dot dot-cyan"></div>Target: Wayland · Hardened · Rust-native</div>
+      <div class="meta-item"><div class="dot dot-rust"></div>Stack: KDE Plasma 6 · Python · Shell · Rust</div>
+    </div>
+
+    <div class="state-grid">
+      <div class="state-card">
+        <div class="state-label">Current Release</div>
+        <div class="state-value">v1.1</div>
+        <div class="state-sub">Titanium Velocity Stable</div>
+      </div>
+      <div class="state-card">
+        <div class="state-label">Trust Score</div>
+        <div class="state-value">92/100</div>
+        <div class="state-sub">Pre-Renaissance baseline</div>
+      </div>
+      <div class="state-card">
+        <div class="state-label">Boot Time</div>
+        <div class="state-value">&lt;12s</div>
+        <div class="state-sub">Shutdown: 10s</div>
+      </div>
+      <div class="state-card">
+        <div class="state-label">Repo Language</div>
+        <div class="state-value">Py/Sh</div>
+        <div class="state-sub">51% Python · 37% Shell</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CURRENT FLAWS -->
+  <div class="section">
+    <div class="section-eyebrow">Before We Start</div>
+    <div class="section-title">Known Flaws to Fix in v2.0</div>
+    <p class="section-desc">These are the exact issues inherited from v1.1. Every phase below directly addresses one or more of these.</p>
+
+    <div class="flaw-list">
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>Live session boot failure</strong> — kernel /boot/vmlinuz missing on some USB/HDD enclosures. ISO not universal yet.</div>
+      </div>
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>Hardware gaps</strong> — acpi_osi suspend/resume, Nvidia persistence, hybrid graphics not fully handled.</div>
+      </div>
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>Onboarding wizard incomplete</strong> — visual first-run bridge exists but lacks full guided flow.</div>
+      </div>
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>No Kali tooling</strong> — only available via Flatpak optionally. No sandboxed pentest layer built in.</div>
+      </div>
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>Security hardening is surface-level</strong> — AppArmor active but no hardened kernel, no immutable paths, no TPM integration.</div>
+      </div>
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>VHI edge cases</strong> — Lite/Velocity modes untested on exotic or very low-end hardware.</div>
+      </div>
+      <div class="flaw-item">
+        <div class="flaw-icon">⚠</div>
+        <div class="flaw-text"><strong>No Rust tooling layer</strong> — vx commands are Shell/Python; no Rust binaries for speed and memory safety.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE OVERVIEW -->
+  <div class="section">
+    <div class="section-eyebrow">System Design</div>
+    <div class="section-title">v2.0 Architecture Blueprint</div>
+    <p class="section-desc">Five distinct layers, each independently improvable. Vaelix Renaissance is modular by design.</p>
+
+    <div class="arch-grid">
+      <div class="arch-card">
+        <div class="arch-icon">🖥</div>
+        <div class="arch-title">UI / Compositor Layer</div>
+        <div class="arch-desc">Wayland-first KDE Plasma 6. NixOS-inspired spatial layout. Fluid KWin animations with GPU compositing. Glassmorphic Amethyst Noir identity.</div>
+        <div class="arch-stack">
+          <span class="pill">Wayland</span>
+          <span class="pill">KDE Plasma 6</span>
+          <span class="pill">KWin</span>
+          <span class="pill">SDDM</span>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon">🔒</div>
+        <div class="arch-title">Security Hardening Layer</div>
+        <div class="arch-desc">GrapheneOS-inspired desktop hardening. Hardened kernel patches, AppArmor profiles, sandboxed Flatpak, TPM-backed FDE, minimal attack surface.</div>
+        <div class="arch-stack">
+          <span class="pill-cyan pill">hardened-linux</span>
+          <span class="pill-cyan pill">AppArmor</span>
+          <span class="pill-cyan pill">Firejail</span>
+          <span class="pill-cyan pill">TPM2</span>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon">🦀</div>
+        <div class="arch-title">Core Tooling in Rust</div>
+        <div class="arch-desc">Rewrite speed-critical vx commands as Rust binaries. Memory safe, fast, zero-dep executables. Shipped as part of the base layer.</div>
+        <div class="arch-stack">
+          <span class="pill-rust pill">rustc</span>
+          <span class="pill-rust pill">cargo</span>
+          <span class="pill-rust pill">clippy</span>
+          <span class="pill-rust pill">vx-core</span>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon">🕵️</div>
+        <div class="arch-title">Kali Sandbox Layer</div>
+        <div class="arch-desc">Optional but installable pentest toolkit in an isolated namespace. nmap, gobuster, hydra, sqlmap, wireshark — sandboxed, no host system risk.</div>
+        <div class="arch-stack">
+          <span class="pill-green pill">nmap</span>
+          <span class="pill-green pill">gobuster</span>
+          <span class="pill-green pill">sqlmap</span>
+          <span class="pill-green pill">Podman</span>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon">⚡</div>
+        <div class="arch-title">VHI 2.0 — Adaptive Intel</div>
+        <div class="arch-desc">Improved Universal Hardware Intelligence. Auto-detects GPU vendor, RAM tier, storage type. Applies Lite / Standard / Velocity profile at first boot.</div>
+        <div class="arch-stack">
+          <span class="pill">VHI</span>
+          <span class="pill">thermald</span>
+          <span class="pill">ZRAM</span>
+          <span class="pill">BFQ/none</span>
+        </div>
+      </div>
+
+      <div class="arch-card">
+        <div class="arch-icon">🧭</div>
+        <div class="arch-title">Onboarding & Identity</div>
+        <div class="arch-desc">Full first-run wizard. Atmosphere picker, VHI report, hardware summary, dev/security mode toggle. Vaelix identity on boot splash, login, terminal.</div>
+        <div class="arch-stack">
+          <span class="pill">Plymouth</span>
+          <span class="pill">SDDM Theme</span>
+          <span class="pill">VCC Wizard</span>
+          <span class="pill">Starship</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE ROADMAP -->
+  <div class="section">
+    <div class="section-eyebrow">Execution Plan</div>
+    <div class="section-title">Phase-by-Phase Roadmap</div>
+    <p class="section-desc">Each phase is self-contained. Paste one phase at a time into your AI IDE — Google's Gemini or any agent will understand the task blocks.</p>
+
+    <div class="phases">
+
+      <!-- PHASE 1 -->
+      <div class="phase">
+        <div class="phase-dot-col">
+          <div class="phase-dot dot-p1"></div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-name">Phase 1 — Wayland Migration & UI Renaissance</div>
+            <div class="phase-tag tag-amethyst">UI LAYER</div>
+          </div>
+          <div class="phase-goal">
+            Migrate from X11 to full Wayland. Upgrade to KDE Plasma 6. Rebuild all animations and glassmorphic theming from scratch to match NixOS spatial quality but with Vaelix Amethyst Noir identity. Fix the VCC Atmosphere tab layout bug seen in screenshots.
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Install KDE Plasma 6 + Wayland compositor: <code>plasma-workspace-wayland</code>, <code>kwin-wayland</code></div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Set SDDM to launch Plasma Wayland session by default in <code>/etc/sddm.conf.d/vaelix.conf</code></div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Enable KWin effects: Wobbly Windows OFF, Magic Lamp minimize ON, Glide ON, translucency ON</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Create custom KWin script for Vaelix window open/close animations (fade + slight scale from 0.95)</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Update Vaelix Atmosphere QML panel — fix the "choose your theme" card layout overflow visible in LinkedIn screenshot</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Add "Auto Scheduler" theme switcher: sunrise = Titanium Velocity, sunset = Amethyst Noir, midnight = Executive Noir</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Rebuild VCC sidebar in PyQt6 to be Wayland-compatible (no X11 window positioning hacks)</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Set accent color to respond to power mode: amethyst on AC, cyan-dim on battery</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Verify KRunner, Dolphin, all GTK apps use native Wayland (set <code>WAYLAND_DISPLAY</code> and <code>QT_QPA_PLATFORM=wayland</code>)</div>
+            <div class="task"><div class="task-check" style="background: var(--amethyst);"></div>Test suspend/resume on Wayland — fix black screen resume bug</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 2 -->
+      <div class="phase">
+        <div class="phase-dot-col">
+          <div class="phase-dot dot-p2"></div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-name">Phase 2 — Security Hardening (GrapheneOS-Inspired)</div>
+            <div class="phase-tag tag-cyan">SECURITY LAYER</div>
+          </div>
+          <div class="phase-goal">
+            Apply desktop-grade hardening inspired by GrapheneOS principles. Hardened kernel, locked-down services, app sandboxing, TPM-backed disk encryption, minimal network attack surface.
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-check"></div>Install linux-hardened kernel or apply kernel lockdown mode: <code>security=apparmor lsm=apparmor,lockdown</code></div>
+            <div class="task"><div class="task-check"></div>Enable TPM2-backed LUKS2 encryption: <code>clevis</code> + <code>tpm2-tools</code> for auto-unlock on trusted hardware</div>
+            <div class="task"><div class="task-check"></div>Write AppArmor profiles for: Firefox, VCC, Dolphin, terminal emulator</div>
+            <div class="task"><div class="task-check"></div>Harden <code>/etc/sysctl.conf</code>: disable IPv6 if unused, restrict ptrace, enable ASLR full, disable kernel pointers in logs</div>
+            <div class="task"><div class="task-check"></div>Set up Firejail defaults for untrusted apps (install <code>firejail</code> + <code>firetools</code>)</div>
+            <div class="task"><div class="task-check"></div>Enforce Flatpak permission model: revoke filesystem=host by default, use <code>flatpak override</code> per app</div>
+            <div class="task"><div class="task-check"></div>Create <code>vx security audit</code> command: checks AppArmor status, LUKS status, open ports, failed login attempts</div>
+            <div class="task"><div class="task-check"></div>Add VCC Security tab: shows active profiles, TPM status, last audit result, one-click re-enforce button</div>
+            <div class="task"><div class="task-check"></div>Disable Bluetooth + WiFi on fresh boot (user enables via VCC toggle — explicit consent model)</div>
+            <div class="task"><div class="task-check"></div>Log all <code>sudo</code> usage to <code>/var/log/vaelix/sudo.log</code> with timestamp + command</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 3 -->
+      <div class="phase">
+        <div class="phase-dot-col">
+          <div class="phase-dot dot-p3"></div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-name">Phase 3 — Rust Core & vx 2.0</div>
+            <div class="phase-tag tag-rust">RUST LAYER</div>
+          </div>
+          <div class="phase-goal">
+            Rewrite speed-critical vx commands as compiled Rust binaries. Add Rust + full dev stack to the default install. This is the "clueless young person building an OS in Rust" moment.
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-check"></div>Install Rust toolchain via official installer (not distro package): <code>curl https://sh.rustup.rs | sh</code></div>
+            <div class="task"><div class="task-check"></div>Create <code>vx-core</code> Rust project: cargo workspace with sub-crates for each vx command</div>
+            <div class="task"><div class="task-check"></div>Port <code>vx doctor</code> to Rust: reads SMART data, battery health, service status — faster than Python version</div>
+            <div class="task"><div class="task-check"></div>Port <code>vx clean</code> to Rust: dry-run preview mode, then clean with confirmation prompt</div>
+            <div class="task"><div class="task-check"></div>Write <code>vx bench</code> in Rust: CPU, RAM, disk speed benchmark with Vaelix-styled ASCII output</div>
+            <div class="task"><div class="task-check"></div>Keep vx Shell wrapper as entrypoint — Rust binaries are called under the hood transparently</div>
+            <div class="task"><div class="task-check"></div>Add <code>vx dev init</code> command: scaffolds a dev workspace with git, venv, cargo, Docker in one shot</div>
+            <div class="task"><div class="task-check"></div>Pre-install: <code>rustc</code>, <code>cargo</code>, <code>cargo-audit</code>, <code>clippy</code>, Node.js LTS, Python 3.12 + pip, Docker, lazygit</div>
+            <div class="task"><div class="task-check"></div>Integrate <code>cargo audit</code> into <code>vx doctor</code> for Rust project vulnerability scanning</div>
+            <div class="task"><div class="task-check"></div>Add Starship prompt Rust segment: shows active Rust version and cargo project name in terminal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 4 -->
+      <div class="phase">
+        <div class="phase-dot-col">
+          <div class="phase-dot dot-p4"></div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-name">Phase 4 — Kali Sandbox & Pentest Layer</div>
+            <div class="phase-tag tag-green">HACKER LAYER</div>
+          </div>
+          <div class="phase-goal">
+            Integrate optional Kali tooling in an isolated Podman/namespace container — not system-level. User activates via <code>vx pentest on</code>. No host risk, full tool access.
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-check"></div>Install Podman (rootless container runtime) as the isolation layer for Kali tools</div>
+            <div class="task"><div class="task-check"></div>Build <code>vaelix-kali</code> Podman image: based on kalilinux/kali-rolling, with nmap, gobuster, hydra, sqlmap, nikto, wireshark-cli</div>
+            <div class="task"><div class="task-check"></div>Write <code>vx pentest on</code>: pulls/starts the kali container and drops user into an isolated shell</div>
+            <div class="task"><div class="task-check"></div>Write <code>vx pentest off</code>: stops and removes the running container cleanly</div>
+            <div class="task"><div class="task-check"></div>Add VCC "Dev Tools" tab: pentest toggle, container status, list of available tools</div>
+            <div class="task"><div class="task-check"></div>Create <code>vx scan [target]</code> wrapper: runs nmap + basic recon inside the container with output piped to host terminal</div>
+            <div class="task"><div class="task-check"></div>Ensure WiFi adapter is passed through to container for wireless scanning if needed (<code>--device</code> flag)</div>
+            <div class="task"><div class="task-check"></div>Store scan results in <code>~/vaelix-pentest-logs/</code> on host — container has no persistent write access elsewhere</div>
+            <div class="task"><div class="task-check"></div>Add disclaimer modal in VCC when enabling pentest mode: "only use on networks you own or have permission to test"</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHASE 5 -->
+      <div class="phase">
+        <div class="phase-dot-col">
+          <div class="phase-dot dot-p5"></div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-header">
+            <div class="phase-name">Phase 5 — VHI 2.0, Onboarding Wizard & ISO Polish</div>
+            <div class="phase-tag tag-pink">RELEASE LAYER</div>
+          </div>
+          <div class="phase-goal">
+            Fix the live session boot bug. Complete the onboarding wizard. Stress-test VHI Lite/Velocity on edge hardware. Build the final ISO with all layers integrated. Ship v2.0.
+          </div>
+          <div class="task-list">
+            <div class="task"><div class="task-check"></div>Fix live ISO boot: ensure vmlinuz is correctly symlinked in <code>/boot</code> for casper live session</div>
+            <div class="task"><div class="task-check"></div>Test ISO on VirtualBox, QEMU/KVM, bare metal USB boot — verify all three work before release</div>
+            <div class="task"><div class="task-check"></div>Upgrade VHI: add GPU vendor detection (nvidia/amd/intel), apply correct driver and power profile per vendor</div>
+            <div class="task"><div class="task-check"></div>VHI Lite mode: disable Baloo indexing, reduce animation scale to 0.5x, cap background daemons</div>
+            <div class="task"><div class="task-check"></div>VHI Velocity mode: enable full animations, XanMod kernel params, gaming mode auto-prep</div>
+            <div class="task"><div class="task-check"></div>Build complete onboarding wizard (PyQt6): Step 1 = Atmosphere pick, Step 2 = VHI report, Step 3 = dev/security mode, Step 4 = done + VCC launch</div>
+            <div class="task"><div class="task-check"></div>Add Nvidia persistence fix: write <code>/etc/systemd/system/nvidia-persistenced.service</code> override</div>
+            <div class="task"><div class="task-check"></div>Add acpi_osi fix for suspend/resume: write kernel parameter to <code>/etc/default/grub</code> and run <code>update-grub</code></div>
+            <div class="task"><div class="task-check"></div>Rebuild Plymouth boot splash: animated Vaelix logo with amethyst particle effect</div>
+            <div class="task"><div class="task-check"></div>Run full release audit: <code>vx doctor</code>, security audit, snapshot test, ISO boot test — target Trust Score 97/100</div>
+            <div class="task"><div class="task-check"></div>Tag release as <code>v2.0-renaissance</code> on GitHub, update README with new architecture diagram</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROGRESS TRACKER -->
+  <div class="section">
+    <div class="section-eyebrow">At a Glance</div>
+    <div class="section-title">Completion Tracker</div>
+    <p class="section-desc">Use this as your scoreboard. Each phase unlocks the next.</p>
+
+    <div class="timeline-bar">
+      <div class="tl-row">
+        <div class="tl-phase-name">Phase 1 · UI/Wayland</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:100%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div></div>
+        <div class="tl-status" style="color: var(--amethyst); font-weight: bold;">COMPLETED</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-phase-name">Phase 2 · Security</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #22d3ee, #67e8f9);"></div></div>
+        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-phase-name">Phase 3 · Rust Core</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #f97316, #fb923c);"></div></div>
+        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-phase-name">Phase 4 · Kali Layer</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #4ade80, #86efac);"></div></div>
+        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-phase-name">Phase 5 · Release ISO</div>
+        <div class="tl-bar-track"><div class="tl-bar-fill" style="width:0%; background: linear-gradient(90deg, #e879f9, #f0abfc);"></div></div>
+        <div class="tl-status" style="color: var(--text-faint);">NOT STARTED</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW TO USE THIS -->
+  <div class="section">
+    <div class="section-eyebrow">Usage Guide</div>
+    <div class="section-title">How to Feed This to Your AI IDE</div>
+    <p class="section-desc">You're using Google's AI IDE (presumably Gemini Code Assist or similar). Here's the exact workflow:</p>
+
+    <div class="flaw-list" style="gap: 10px;">
+      <div class="flaw-item" style="background: rgba(139,92,246,0.04); border-color: rgba(139,92,246,0.12);">
+        <div class="flaw-icon" style="background: rgba(139,92,246,0.15); color: var(--amethyst);">1</div>
+        <div class="flaw-text">Open your AI IDE. Start a new session. Paste the full Phase 1 task list as your first prompt along with: <strong style="color: var(--amethyst);">"I'm building Vaelix OS 2.0 on Ubuntu 24.04 + KDE Plasma 6. Execute Phase 1 tasks one by one. Ask me before running destructive commands."</strong></div>
+      </div>
+      <div class="flaw-item" style="background: rgba(139,92,246,0.04); border-color: rgba(139,92,246,0.12);">
+        <div class="flaw-icon" style="background: rgba(139,92,246,0.15); color: var(--amethyst);">2</div>
+        <div class="flaw-text">Let the agent run each task. Review output. Tick off completed checkboxes in this document manually as you go.</div>
+      </div>
+      <div class="flaw-item" style="background: rgba(139,92,246,0.04); border-color: rgba(139,92,246,0.12);">
+        <div class="flaw-icon" style="background: rgba(139,92,246,0.15); color: var(--amethyst);">3</div>
+        <div class="flaw-text">Once Phase 1 is complete, commit to GitHub with tag <code>v2.0-phase1</code>, then start a fresh session for Phase 2.</div>
+      </div>
+      <div class="flaw-item" style="background: rgba(139,92,246,0.04); border-color: rgba(139,92,246,0.12);">
+        <div class="flaw-icon" style="background: rgba(139,92,246,0.15); color: var(--amethyst);">4</div>
+        <div class="flaw-text">Repeat until Phase 5. Final step: boot the ISO on real hardware, run <code>vx doctor</code>, and push the release build to GitHub.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FOOTER -->
+  <footer>
+    <div>
+      <div class="footer-brand">Vaelix OS</div>
+      <div class="footer-sub">Renaissance Roadmap · Generated for Vaibhav Sharma · April 2026</div>
+    </div>
+    <a class="footer-link" href="https://github.com/Nutricalboii/VaelixOS" target="_blank">→ github.com/Nutricalboii/VaelixOS</a>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -135,9 +135,11 @@ class AutoScheduler(QThread):
         from datetime import datetime
         hour = datetime.now().hour
         if 6 <= hour < 18:
-            self.theme_suggested.emit("velocity")   # Day → Titanium Velocity
+            self.theme_suggested.emit("velocity")   # Sunrise → Titanium Velocity
+        elif 18 <= hour < 24:
+            self.theme_suggested.emit("amethyst")  # Sunset → Amethyst Noir
         else:
-            self.theme_suggested.emit("amethyst")  # Night → Amethyst Noir
+            self.theme_suggested.emit("noir")      # Midnight → Executive Noir
 
 
 class AtmosphereModule(QScrollArea):
@@ -190,7 +192,7 @@ class AtmosphereModule(QScrollArea):
         grid_layout.setContentsMargins(0, 0, 0, 0)
 
         self.theme_cards: dict[str, ThemeCard] = {}
-        positions = [(0,0), (0,1), (0,2), (1,0), (1,1)]
+        positions = [(0,0), (0,1), (1,0), (1,1), (2,0)]
 
         for (row, col), (tid, theme) in zip(positions, THEMES.items()):
             card = ThemeCard(theme, is_active=(tid == self.active_theme_id))

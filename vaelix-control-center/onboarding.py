@@ -37,7 +37,6 @@ class OnboardingWizard(QMainWindow):
         super().__init__()
         self.setWindowTitle("Welcome to Vaelix OS")
         self.setFixedSize(700, 500)
-        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         
         self.central_widget = QWidget()
