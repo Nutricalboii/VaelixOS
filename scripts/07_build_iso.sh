@@ -43,7 +43,7 @@ set timeout=5
 
 menuentry "Vaelix OS 2.0 Core (Safe Boot)" {
     set gfxpayload=keep
-    linux  /casper/vmlinuz boot=casper nosplash debug verbose ---
+    linux  /casper/vmlinuz boot=casper nosplash debug verbose console=ttyS0 ---
     initrd /casper/initrd.img
 }
 EOF
