@@ -21,7 +21,7 @@ echo "✦ Phase 6: Deploying Productivity & Dev Suite..."
 echo "✦ Adding repositories for VSCodium and Firefox Deb..."
 run_chroot_raw "
     # VSCodium Key & Repo
-    curl -fSsL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | gpg --dearmor -o /usr/share/keyrings/vscodium.gpg
+    curl -fSsL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | gpg --batch --yes --dearmor -o /usr/share/keyrings/vscodium.gpg
     echo 'deb [ signed-by=/usr/share/keyrings/vscodium.gpg ] https://download.vscodium.com/debs vscodium main' > /etc/apt/sources.list.d/vscodium.list
 
     # Mozilla PPA (for Firefox Deb instead of Snap)

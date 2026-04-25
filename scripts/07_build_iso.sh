@@ -5,7 +5,7 @@ set -e
 WORK="$(pwd)/build"
 MNT="${WORK}/mnt"
 ISO_ROOT="${WORK}/iso_root"
-ISO_OUT="${WORK}/Vaelix-2.0-Core.iso"
+ISO_OUT="${WORK}/Vaelix-2.0-Renaissance.iso"
 
 log() { echo -e "\e[35m✦\e[0m $*"; }
 ok()  { echo -e "\e[32m✅\e[0m $*"; }
@@ -36,7 +36,8 @@ ok "Core SquashFS Created."
 
 # ─── Step 4: No-Frills GRUB Config ───────────────────────────────────────────
 log "Step 4: Writing No-Frills GRUB Config..."
-cat > /tmp/grub.cfg << 'EOF'
+GRUB_TMP=$(mktemp)
+cat > "$GRUB_TMP" << 'EOF'
 set default=0
 set timeout=5
 
@@ -46,7 +47,8 @@ menuentry "Vaelix OS 2.0 Core (Safe Boot)" {
     initrd /casper/initrd.img
 }
 EOF
-echo "1978" | sudo -S cp /tmp/grub.cfg "${ISO_ROOT}/boot/grub/grub.cfg"
+echo "1978" | sudo -S cp "$GRUB_TMP" "${ISO_ROOT}/boot/grub/grub.cfg"
+rm "$GRUB_TMP"
 
 # ─── Step 5: Build ISO ───────────────────────────────────────────────────────
 log "Step 5: Generating ISO via grub-mkrescue..."
