@@ -17,9 +17,16 @@ echo "1978" | sudo -S rm -rf "${ISO_ROOT}"
 echo "1978" | sudo -S mkdir -p "${ISO_ROOT}/casper" "${ISO_ROOT}/boot/grub"
 
 # ─── Step 2: Sync Kernel and Initrd ──────────────────────────────────────────
-log "Step 2: Syncing Kernel and Freshly Generated Initrd..."
-VMLINUZ=$(ls "${MNT}/boot/vmlinuz-"* | sort -V | tail -1)
-INITRD=$(ls  "${MNT}/boot/initrd.img-"* | sort -V | tail -1)
+log "Step 2: Syncing Stable Generic Kernel and Initrd..."
+# We prioritize the generic kernel for VM compatibility
+VMLINUZ=$(ls "${MNT}/boot/vmlinuz-6.8.0"* | sort -V | tail -1)
+INITRD=$(ls  "${MNT}/boot/initrd.img-6.8.0"* | sort -V | tail -1)
+
+# Fallback to any kernel if 6.8.0 is missing
+if [ -z "$VMLINUZ" ]; then
+    VMLINUZ=$(ls "${MNT}/boot/vmlinuz-"* | sort -V | tail -1)
+    INITRD=$(ls  "${MNT}/boot/initrd.img-"* | sort -V | tail -1)
+fi
 
 echo "1978" | sudo -S cp "$VMLINUZ" "${ISO_ROOT}/casper/vmlinuz"
 echo "1978" | sudo -S cp "$INITRD"  "${ISO_ROOT}/casper/initrd.img"
